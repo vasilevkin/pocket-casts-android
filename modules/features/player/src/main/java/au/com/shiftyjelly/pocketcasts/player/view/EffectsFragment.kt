@@ -158,7 +158,8 @@ class EffectsFragment : BaseDialogFragment(), CompoundButton.OnCheckedChangeList
         val binding = binding ?: return
 
         // val speed = (amount.clipToRange(0.5, 3.0) * 10.0).toInt() / 10.0
-        val speed = round(amount.clipToRange(0.5, 3.0) * 10.0) / 10.0
+        val speed = round(amount.clipToRange(PLAYBACK_MIN_SPEED, PLAYBACK_MAX_SPEED) * 10.0) / 10.0
+//        val speed = round(amount.clipToRange(0.5, 3.0) * 10.0) / 10.0
         effects.playbackSpeed = speed
         updatedSpeed = speed
         binding.playbackSpeedString = String.format("%.1fx", effects.playbackSpeed)
@@ -253,5 +254,10 @@ class EffectsFragment : BaseDialogFragment(), CompoundButton.OnCheckedChangeList
 
     private fun trackPlaybackEffectsEvent(event: AnalyticsEvent, props: Map<String, Any> = emptyMap()) {
         playbackManager.trackPlaybackEffectsEvent(event, props, PlaybackManager.PlaybackSource.PLAYER_PLAYBACK_EFFECTS)
+    }
+
+    private companion object {
+        const val PLAYBACK_MIN_SPEED = 0.2
+        const val PLAYBACK_MAX_SPEED = 5.0
     }
 }
